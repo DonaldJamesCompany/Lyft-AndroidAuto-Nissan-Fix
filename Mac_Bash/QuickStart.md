@@ -3,6 +3,83 @@
 
 ---
 
+## About This Fix — Which Devices Are Affected?
+
+This fix was originally identified and documented for **Samsung Galaxy phones** used with **Nissan vehicles** via Android Auto — and that remains the most common scenario. The three issues this script corrects (Samsung's Wi-Fi switching behavior, Lyft's background location being silently revoked, and Android Auto's GPS interference) appear most frequently on Samsung Galaxy hardware.
+
+**However, you do not have to be using a Samsung phone for this to apply to you.**
+Other Android phones — including Google Pixel, Motorola, and OnePlus devices — have exhibited the exact same GPS drop and background location loss symptoms when paired with a Nissan vehicle through Android Auto. If your phone isn't a Samsung but you're seeing the same problems, these fixes are worth running; the underlying ADB commands work identically across all Android phones.
+
+---
+
+## Before You Begin — Phone Setup
+
+The script communicates with your phone over USB using Android Debug Bridge (ADB). Before that connection is possible, two things must be enabled on your phone: **Developer Options** and **USB Debugging**. Neither is enabled by default.
+
+### Part A — Unlock Developer Options
+
+Developer Options is a hidden settings menu built into every Android phone. It must be unlocked before USB Debugging can be turned on.
+
+**On Samsung Galaxy phones:**
+1. Open **Settings**
+2. Tap **About Phone**
+3. Tap **Software Information**
+4. Find **Build Number** and **tap it 7 times rapidly**
+   - Around tap 4 your phone shows a countdown: *"You are 3 steps away from being a developer"*
+   - After tap 7: **"You are now a developer!"** — you're done
+5. If prompted, enter your PIN, pattern, or fingerprint to confirm
+
+> Developer Options will now appear as a new entry in your main Settings list.
+> On some Samsung models it shows up under **Settings › General Management** instead.
+
+**On other Android phones** — the path to Build Number varies slightly:
+
+| Device | Where to find Build Number |
+|--------|----------------------------|
+| **Google Pixel** | Settings › About Phone › **Build Number** |
+| **Motorola** | Settings › About Phone › **Build Number** |
+| **OnePlus** | Settings › About Phone › Version › **Build Number** |
+| **LG** | Settings › About Phone › Software Info › **Build Number** |
+| **Any Android 10+** | Settings › About Phone › **Build Number** |
+
+On all of these: **tap Build Number 7 times** and watch for the *"You are now a developer!"* message.
+
+**Build Number tapping isn't working?** Try these before giving up:
+- Make sure you're tapping the **Build Number** line specifically — not the Android version, kernel version, or baseband version lines nearby
+- Tap at a steady, rapid pace — not too slow, not too fast
+- Some devices require you to **tap and hold** the last tap rather than a quick tap
+- A small number of heavily carrier-modified firmware builds hide Developer Options differently — if none of the above works, search Google for your **exact model number + "enable developer options"** for a device-specific walkthrough
+
+---
+
+### Part B — Enable USB Debugging
+
+Once Developer Options is unlocked:
+
+1. Go back to the main **Settings** screen
+2. Scroll down and tap **Developer Options**
+   > On some Samsung models this appears under **Settings › General Management › Developer Options**
+3. Scroll down inside Developer Options until you find **USB Debugging**
+4. Toggle **USB Debugging** to **ON**
+5. A dialog will appear asking *"Allow USB debugging?"* — tap **OK**
+
+> USB Debugging stays on until you manually disable it or factory reset your phone.
+> You only need to do this once.
+
+---
+
+### If Your Device Cannot Enable Developer Options or USB Debugging
+
+This is uncommon, but some carrier-locked or enterprise-managed phones permanently block access to Developer Options regardless of the method used. If you've tried every approach above and Developer Options still will not unlock:
+
+- Search Google for: **[your phone model] + "enable developer options" + [your Android version]**
+- Check your device manufacturer's official support site
+- Devices enrolled in a corporate or MDM (Mobile Device Management) profile may have Developer Options permanently disabled by policy — if this applies, USB Debugging cannot be enabled and **this script will not be able to run on that specific device**
+
+**Once USB Debugging is successfully enabled**, return to the top of this guide and run the script from the beginning — it is completely safe to run more than once.
+
+---
+
 ## What You Need Before Starting
 
 | Requirement | Details |
