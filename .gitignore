@@ -1,0 +1,14 @@
+# Downloaded platform tools (auto-downloaded by the scripts, auto-deleted on completion)
+platform-tools-latest-windows/
+platform-tools-latest-linux/
+
+# ZIP files from platform tools download
+platform-tools-latest-windows.zip
+platform-tools-latest-linux.zip
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
