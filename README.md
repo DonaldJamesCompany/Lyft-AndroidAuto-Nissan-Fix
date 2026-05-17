@@ -31,12 +31,13 @@ Automatically patches three known issues on Samsung Android phones that cause th
 
 ## Available Scripts
 
-| Platform | Script | Folder |
-|----------|--------|--------|
-| **Windows 10 / 11** | `Fix_Lyft_Background_Location.bat` | `Win10_Win11/` |
-| **Linux / Bash** | `Fix_Lyft_Background_Location.sh` | `Linux_Bash/` |
+| Platform | Script | Folder | Quick Start |
+|----------|--------|--------|-------------|
+| **Windows 10 / 11** | `LyftDriver-AndroidAuto-Nissan-Glitch-Fix.bat` | `Win10_Win11/` | [QuickStart.md](Win10_Win11/QuickStart.md) |
+| **Linux / Bash** | `LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh` | `Linux_Bash/` | [QuickStart.md](Linux_Bash/QuickStart.md) |
+| **macOS** | `LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh` | `Mac_Bash/` | [QuickStart.md](Mac_Bash/QuickStart.md) |
 
-> Both scripts perform identical fixes. Choose the one that matches your operating system.
+> All scripts perform identical fixes. Choose the one that matches your operating system.
 
 ---
 
@@ -52,11 +53,13 @@ You will need **all** of the following before running the script.
 |----------|--------------|
 | **Windows** | `https://dl.google.com/android/repository/platform-tools-latest-windows.zip` |
 | **Linux** | `https://dl.google.com/android/repository/platform-tools-latest-linux.zip` |
+| **macOS** | `https://dl.google.com/android/repository/platform-tools-latest-darwin.zip` |
 
 - The tools are downloaded next to the script, used for the fixes, and **deleted automatically** when the script finishes — your folder stays clean
 - If the tools folder is already present, the download step is skipped
 - Requires an **active internet connection** on first run
 - **Linux only:** requires `curl` and `unzip` to be installed (see Troubleshooting if either is missing)
+- **macOS:** `curl` and `unzip` are pre-installed on macOS 10.x and later — no additional software needed
 
 > **Antivirus warning (Windows):** Some antivirus programs flag ADB executables as potentially unwanted software.
 > If `adb.exe` is blocked or quarantined after extraction, add the `platform-tools-latest-windows\`
@@ -95,7 +98,7 @@ You will need **all** of the following before running the script.
 
 ### 🖥️ Windows 10 / 11
 
-1. Open the `Win10_Win11\` folder and **double-click** `Fix_Lyft_Background_Location.bat`
+1. Open the `Win10_Win11\` folder and **double-click** `LyftDriver-AndroidAuto-Nissan-Glitch-Fix.bat`
    - If a *"Windows protected your PC"* SmartScreen prompt appears, click **More info → Run anyway**
    - This warning appears because the file is unsigned, not because it is unsafe
 2. The script **automatically downloads** the Android Platform Tools (~11 MB) if not already present — wait for the download and extraction to complete
@@ -119,11 +122,11 @@ You will need **all** of the following before running the script.
    ```
 2. Make the script executable *(first run only)*:
    ```bash
-   chmod +x Fix_Lyft_Background_Location.sh
+   chmod +x LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh
    ```
 3. Run the script:
    ```bash
-   ./Fix_Lyft_Background_Location.sh
+   ./LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh
    ```
 4. The script **automatically downloads** the Android Platform Tools (~11 MB) if not already present — wait for the download and extraction to complete
 5. Read the on-screen phone prep checklist and confirm your phone is ready
@@ -135,6 +138,35 @@ You will need **all** of the following before running the script.
 9. After each fix, the script pauses so you can review the output before continuing
 10. After Fix 3, automatic **verification checks** run — review the results on screen
 11. Press **Enter** to exit — the ADB server stops and the platform tools folder is deleted automatically
+
+---
+
+### 🍎 macOS
+
+1. Open **Terminal** (`⌘ + Space` → type **Terminal** → **Return**)
+2. Navigate to the `Mac_Bash/` folder:
+   ```bash
+   cd Mac_Bash
+   ```
+3. Make the script executable *(first run only)*:
+   ```bash
+   chmod +x LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh
+   ```
+4. Run the script:
+   ```bash
+   ./LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh
+   ```
+   > If macOS Gatekeeper blocks the script with *"cannot be opened because it is from an unidentified developer"*, right-click the file in Finder → **Open** → **Open** again. After this one-time approval it runs normally from Terminal.
+5. The script **automatically downloads** the Android Platform Tools (~11 MB) if not already present — wait for the download and extraction to complete
+6. Read the on-screen phone prep checklist and confirm your phone is ready
+7. **Connect your phone to your Mac via USB**
+8. **On your phone's screen:** when the *"Allow USB debugging?"* dialog appears —
+   - Check **"Always allow from this computer"**
+   - Tap **OK**
+9. Press **Enter** to begin — all 3 fixes run automatically, one at a time
+10. After each fix, the script pauses so you can review the output before continuing
+11. After Fix 3, automatic **verification checks** run — review the results on screen
+12. Press **Enter** to exit — the ADB server stops and the platform tools folder is deleted automatically
 
 > ⚠️ **Do not unplug your phone during the script.** Wait for the final *"safe to unplug"* message.
 
@@ -178,10 +210,10 @@ android.permission.ACCESS_FINE_LOCATION: granted=false
 
 ## Common Errors & Troubleshooting
 
-### ❌ `Permission denied` when running the script *(Linux only)*
+### ❌ `Permission denied` when running the script *(Linux / macOS)*
 **The script file is not marked as executable.**
-- Run: `chmod +x Fix_Lyft_Background_Location.sh`
-- Then launch with: `./Fix_Lyft_Background_Location.sh`
+- Run: `chmod +x LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh`
+- Then launch with: `./LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh`
 
 ---
 
@@ -192,6 +224,7 @@ android.permission.ACCESS_FINE_LOCATION: granted=false
   - Fedora / RHEL: `sudo dnf install unzip`
   - Arch: `sudo pacman -S unzip`
 - Re-run the script after installing
+- macOS: `unzip` is pre-installed; if missing run `brew install unzip`
 
 ---
 
@@ -202,6 +235,15 @@ android.permission.ACCESS_FINE_LOCATION: granted=false
   - Fedora / RHEL: `sudo dnf install curl`
   - Arch: `sudo pacman -S curl`
 - Re-run the script after installing
+- macOS: `curl` is pre-installed; if missing run `brew install curl`
+
+---
+
+### ❌ macOS Gatekeeper blocks the script *(macOS only)*
+**macOS refuses to run an unsigned script downloaded from the internet.**
+- In **Finder**, right-click `LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh` → **Open** → click **Open** again in the confirmation dialog
+- This one-time approval lets you run the script normally from Terminal going forward
+- Alternatively, from Terminal: `xattr -d com.apple.quarantine LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh`
 
 ---
 
@@ -316,6 +358,7 @@ Yes. After the script completes, the platform tools folder and all its contents 
 
 - **Windows:** `platform-tools-latest-windows\`
 - **Linux:** `platform-tools-latest-linux/` (contains `platform-tools/adb` inside)
+- **macOS:** `platform-tools-latest-darwin/` (contains `platform-tools/adb` inside)
 
 If you re-run the script in the future, the tools are re-downloaded automatically.
 
@@ -345,4 +388,4 @@ No. Enabling Developer Options and USB Debugging is a standard, documented Andro
 
 ---
 
-*Available for Windows (`Win10_Win11/Fix_Lyft_Background_Location.bat`) and Linux (`Linux_Bash/Fix_Lyft_Background_Location.sh`) — platform tools are downloaded automatically (~11 MB, requires internet on first run); compatible with Samsung Galaxy phones running Android 10 or newer.*
+*Available for Windows (`Win10_Win11/LyftDriver-AndroidAuto-Nissan-Glitch-Fix.bat`), Linux (`Linux_Bash/LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh`), and macOS (`Mac_Bash/LyftDriver-AndroidAuto-Nissan-Glitch-Fix.sh`) — platform tools are downloaded automatically (~11 MB, requires internet on first run); compatible with Samsung Galaxy phones running Android 10 or newer.*
