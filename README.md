@@ -283,9 +283,10 @@ android.permission.ACCESS_FINE_LOCATION: granted=false
 
 ### ❌ `pm grant` fails / security exception on Fix 2
 **The Lyft Driver app may not be installed, or has a different package name.**
-- Confirm the **Lyft Driver** app is installed — the package `me.lyft.driver` is the **driver** app only
-- The regular **Lyft rider** app uses a different package name and is not affected by this script
+- Confirm the **Lyft Driver** app is installed — the package `com.lyft.android.driver` is the **driver** app only
+- The regular **Lyft rider** app (`me.lyft.android`) and the **Lyft Direct** payment app (`com.payfare.lyft`) are separate packages and are not affected by this script
 - If you uninstalled and reinstalled Lyft Driver recently, make sure it fully installed before running
+- The script automatically detects the package — if it shows `[WARNING] not found`, run `adb shell pm list packages | grep lyft` with your phone connected to see what Lyft packages are actually installed
 
 ---
 
@@ -374,7 +375,7 @@ If you re-run the script in the future, the tools are re-downloaded automaticall
 ---
 
 **Does this affect the regular Lyft rider app?**
-No. Fix 2 only targets the package `me.lyft.driver` (Lyft Driver app). The consumer Lyft rider app is a separate package and is untouched.
+No. Fix 2 only targets the package `com.lyft.android.driver` (Lyft Driver app). The consumer Lyft rider app (`me.lyft.android`) and the Lyft Direct payment app (`com.payfare.lyft`) are separate packages and are completely untouched.
 
 ---
 
