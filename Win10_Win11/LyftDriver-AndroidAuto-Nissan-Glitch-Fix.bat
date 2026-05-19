@@ -212,14 +212,39 @@ echo.
 echo Applying "Allow all the time" location rules to Lyft Driver...
 echo.
 
+:: Verify the Lyft Driver app is installed before attempting permission grants
+set "LYFT_PKG="
+adb.exe shell pm path me.lyft.driver 2>nul | findstr /i "package:" > nul
+if !errorlevel! == 0 set "LYFT_PKG=me.lyft.driver"
+
+if not defined LYFT_PKG (
+    echo [WARNING] The Lyft Driver app ^(me.lyft.driver^) was NOT found on this phone.
+    echo.
+    echo Lyft-related packages currently installed on this device:
+    adb.exe shell pm list packages 2>nul | findstr /i "lyft"
+    echo.
+    echo This typically means one of:
+    echo   - The Lyft Driver app is not installed on this phone
+    echo   - You are running this on the wrong device
+    echo.
+    echo Skipping Fix 2. Re-run the script on the phone that has the
+    echo Lyft Driver app installed.
+    echo.
+    pause
+    goto :fix2_done
+)
+
+echo Detected: %LYFT_PKG%
+echo.
+
 :: Grant Fine (Precise) Foreground Location
-adb.exe shell pm grant me.lyft.driver android.permission.ACCESS_FINE_LOCATION
+adb.exe shell pm grant %LYFT_PKG% android.permission.ACCESS_FINE_LOCATION
 
 :: Grant Coarse (Approximate) Foreground Location
-adb.exe shell pm grant me.lyft.driver android.permission.ACCESS_COARSE_LOCATION
+adb.exe shell pm grant %LYFT_PKG% android.permission.ACCESS_COARSE_LOCATION
 
 :: Grant Background Location (forces the "Allow all the time" flag)
-adb.exe shell pm grant me.lyft.driver android.permission.ACCESS_BACKGROUND_LOCATION
+adb.exe shell pm grant %LYFT_PKG% android.permission.ACCESS_BACKGROUND_LOCATION
 
 echo.
 echo ----------------------------------------------------
@@ -227,6 +252,8 @@ echo FIX 2 APPLIED: Lyft background location permissions granted.
 echo ----------------------------------------------------
 echo.
 pause
+
+:fix2_done
 
 
 :: ------------------------------------------------------------
@@ -267,7 +294,11 @@ echo.
 
 echo [CHECK 2] Lyft background location -- look for: granted=true
 echo ----------------------------------------------------
-adb.exe shell dumpsys package me.lyft.driver | findstr /i "BACKGROUND_LOCATION"
+if defined LYFT_PKG (
+    adb.exe shell dumpsys package !LYFT_PKG! | findstr /i "BACKGROUND_LOCATION"
+) else (
+    echo [SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied.
+)
 echo.
 
 echo [CHECK 3] Android Auto precise location -- look for: granted=false
