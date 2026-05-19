@@ -46,7 +46,7 @@ if not exist "%~dp0platform-tools-latest-windows\" (
     echo Download complete. Extracting files...
     echo.
 
-    tar -xf "%~dp0platform-tools-latest-windows.zip" -C "%~dp0"
+    tar -xf "%~dp0platform-tools-latest-windows.zip" -C "%~dp0."
 
     if !errorlevel! neq 0 (
         echo.
