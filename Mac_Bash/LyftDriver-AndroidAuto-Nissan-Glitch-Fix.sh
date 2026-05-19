@@ -239,21 +239,46 @@ echo ""
 echo "Applying \"Allow all the time\" location rules to Lyft Driver..."
 echo ""
 
-# Grant Fine (Precise) Foreground Location
-"$ADB" shell pm grant me.lyft.driver android.permission.ACCESS_FINE_LOCATION
+# Detect the Lyft Driver package name
+LYFT_PKG=""
+if "$ADB" shell pm path com.lyft.android.driver 2>/dev/null | grep -q "package:"; then
+    LYFT_PKG="com.lyft.android.driver"
+fi
 
-# Grant Coarse (Approximate) Foreground Location
-"$ADB" shell pm grant me.lyft.driver android.permission.ACCESS_COARSE_LOCATION
+if [ -z "$LYFT_PKG" ]; then
+    echo "[WARNING] The Lyft Driver app (com.lyft.android.driver) was NOT found on this phone."
+    echo ""
+    echo "Lyft-related packages currently installed on this device:"
+    "$ADB" shell pm list packages 2>/dev/null | grep -i "lyft"
+    echo ""
+    echo "This typically means one of:"
+    echo "  - The Lyft Driver app is not installed on this phone"
+    echo "  - You are running this on the wrong device"
+    echo ""
+    echo "Skipping Fix 2. Re-run the script on the phone that has the"
+    echo "Lyft Driver app installed."
+    echo ""
+    press_enter
+else
+    echo "Detected: $LYFT_PKG"
+    echo ""
 
-# Grant Background Location (forces the "Allow all the time" flag)
-"$ADB" shell pm grant me.lyft.driver android.permission.ACCESS_BACKGROUND_LOCATION
+    # Grant Fine (Precise) Foreground Location
+    "$ADB" shell pm grant "$LYFT_PKG" android.permission.ACCESS_FINE_LOCATION
 
-echo ""
-echo "----------------------------------------------------"
-echo "FIX 2 APPLIED: Lyft background location permissions granted."
-echo "----------------------------------------------------"
-echo ""
-press_enter
+    # Grant Coarse (Approximate) Foreground Location
+    "$ADB" shell pm grant "$LYFT_PKG" android.permission.ACCESS_COARSE_LOCATION
+
+    # Grant Background Location (forces the "Allow all the time" flag)
+    "$ADB" shell pm grant "$LYFT_PKG" android.permission.ACCESS_BACKGROUND_LOCATION
+
+    echo ""
+    echo "----------------------------------------------------"
+    echo "FIX 2 APPLIED: Lyft background location permissions granted."
+    echo "----------------------------------------------------"
+    echo ""
+    press_enter
+fi
 
 
 # ------------------------------------------------------------
@@ -294,7 +319,11 @@ echo ""
 
 echo "[CHECK 2] Lyft background location -- look for: granted=true"
 echo "----------------------------------------------------"
-"$ADB" shell dumpsys package me.lyft.driver | grep -i "BACKGROUND_LOCATION"
+if [ -n "$LYFT_PKG" ]; then
+    "$ADB" shell dumpsys package "$LYFT_PKG" | grep -i "BACKGROUND_LOCATION"
+else
+    echo "[SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied."
+fi
 echo ""
 
 echo "[CHECK 3] Android Auto precise location -- look for: granted=false"

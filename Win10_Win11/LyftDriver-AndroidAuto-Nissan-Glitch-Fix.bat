@@ -214,11 +214,11 @@ echo.
 
 :: Verify the Lyft Driver app is installed before attempting permission grants
 set "LYFT_PKG="
-adb.exe shell pm path me.lyft.driver 2>nul | findstr /i "package:" > nul
-if !errorlevel! == 0 set "LYFT_PKG=me.lyft.driver"
+adb.exe shell pm path com.lyft.android.driver 2>nul | findstr /i "package:" > nul
+if !errorlevel! == 0 set "LYFT_PKG=com.lyft.android.driver"
 
 if not defined LYFT_PKG (
-    echo [WARNING] The Lyft Driver app ^(me.lyft.driver^) was NOT found on this phone.
+    echo [WARNING] The Lyft Driver app ^(com.lyft.android.driver^) was NOT found on this phone.
     echo.
     echo Lyft-related packages currently installed on this device:
     adb.exe shell pm list packages 2>nul | findstr /i "lyft"
