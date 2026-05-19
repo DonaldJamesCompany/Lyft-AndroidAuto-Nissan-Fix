@@ -46,7 +46,7 @@ if not exist "%~dp0platform-tools-latest-windows\" (
     echo Download complete. Extracting files...
     echo.
 
-    powershell -NoProfile -NonInteractive -Command "Expand-Archive -LiteralPath '%~dp0platform-tools-latest-windows.zip' -DestinationPath '%~dp0' -Force"
+    tar -xf "%~dp0platform-tools-latest-windows.zip" -C "%~dp0"
 
     if !errorlevel! neq 0 (
         echo.
