@@ -319,7 +319,7 @@ echo ""
 echo "[CHECK 2] Lyft location permissions -- FINE and BACKGROUND should both show: granted=true"
 echo "----------------------------------------------------"
 if [ -n "$LYFT_PKG" ]; then
-    "$ADB" shell dumpsys package "$LYFT_PKG" | grep -i "LOCATION"
+    "$ADB" shell dumpsys package "$LYFT_PKG" | grep -i "LOCATION" | grep -i "granted"
 else
     echo "[SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied."
 fi

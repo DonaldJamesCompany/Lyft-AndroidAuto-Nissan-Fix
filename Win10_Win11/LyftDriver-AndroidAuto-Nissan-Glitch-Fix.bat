@@ -295,7 +295,7 @@ echo.
 echo [CHECK 2] Lyft location permissions -- FINE and BACKGROUND should both show: granted=true
 echo ----------------------------------------------------
 if defined LYFT_PKG (
-    adb.exe shell dumpsys package !LYFT_PKG! | findstr /i "LOCATION"
+    adb.exe shell dumpsys package !LYFT_PKG! | findstr /i "LOCATION" | findstr /i "granted"
 ) else (
     echo [SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied.
 )
