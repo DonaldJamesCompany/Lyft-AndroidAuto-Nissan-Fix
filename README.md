@@ -1,7 +1,7 @@
 # Lyft Driver App — Android Auto: 3-Step Glitch Fix (Nissan Glitch)
 ### Lyft > Nissan Display > Android Auto Glitch Repair Automated Script
 
-Automatically patches three known issues on Samsung Android phones that cause the **Lyft Driver** app to lose background location or drop GPS while connected to Nissan vehicles — all via USB using Google's official **Android Debug Bridge (ADB)** tool. No rooting, no unlocking, no manual downloads, and no manual Settings navigation required. Just plug in your phone and run the script.
+**Originally identified on Nissan vehicles — but applicable to any vehicle that uses Android Auto.** Automatically patches three known issues on Samsung Android phones that cause the **Lyft Driver** app to lose background location or drop GPS while connected via Android Auto — all via USB using Google's official **Android Debug Bridge (ADB)** tool. No rooting, no unlocking, no manual downloads, and no manual Settings navigation required. Just plug in your phone and run the script.
 
 ---
 
@@ -18,6 +18,8 @@ Automatically patches three known issues on Samsung Android phones that cause th
 ---
 
 ## What This Script Does
+
+> This issue was first identified on **Nissan vehicles** but can occur on **any vehicle that uses Android Auto**.
 
 | # | Fix | Why It Helps |
 |---|-----|--------------|

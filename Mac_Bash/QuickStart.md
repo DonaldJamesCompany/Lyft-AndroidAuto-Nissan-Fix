@@ -1,14 +1,18 @@
 # Quick Start — macOS
 ### Lyft Driver App · Android Auto · Nissan Glitch Fix
 
+> Originally identified on **Nissan vehicles** — applicable to **any vehicle that uses Android Auto**.
+
 ---
 
 ## About This Fix — Which Devices Are Affected?
 
-This fix was originally identified and documented for **Samsung Galaxy phones** used with **Nissan vehicles** via Android Auto — and that remains the most common scenario. The three issues this script corrects (Samsung's Wi-Fi switching behavior, Lyft's background location being silently revoked, and Android Auto's GPS interference) appear most frequently on Samsung Galaxy hardware.
+This fix was originally identified on **Nissan vehicles** — though the same issue can occur on **any vehicle that uses Android Auto**. It was also first documented for **Samsung Galaxy phones**, and that remains the most common hardware scenario. The three issues this script corrects (Samsung's Wi-Fi switching behavior, Lyft's background location being silently revoked, and Android Auto's GPS interference) appear most frequently on Samsung Galaxy hardware.
 
 **However, you do not have to be using a Samsung phone for this to apply to you.**
 Other Android phones — including Google Pixel, Motorola, and OnePlus devices — have exhibited the exact same GPS drop and background location loss symptoms when paired with a Nissan vehicle through Android Auto. If your phone isn't a Samsung but you're seeing the same problems, these fixes are worth running; the underlying ADB commands work identically across all Android phones.
+
+**You also do not need to be driving a Nissan.** The same GPS drop and background location loss symptoms can occur on any vehicle that uses Android Auto. If you are seeing these problems with a non-Nissan vehicle, these fixes apply equally.
 
 ---
 
