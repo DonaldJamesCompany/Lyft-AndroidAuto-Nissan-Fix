@@ -292,10 +292,10 @@ adb.exe shell settings get global wifi_watchdog_on
 adb.exe shell settings get global wifi_switch_to_cell
 echo.
 
-echo [CHECK 2] Lyft background location -- look for: granted=true
+echo [CHECK 2] Lyft location permissions -- FINE and BACKGROUND should both show: granted=true
 echo ----------------------------------------------------
 if defined LYFT_PKG (
-    adb.exe shell dumpsys package !LYFT_PKG! | findstr /i "BACKGROUND_LOCATION"
+    adb.exe shell dumpsys package !LYFT_PKG! | findstr /i "LOCATION"
 ) else (
     echo [SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied.
 )

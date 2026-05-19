@@ -317,10 +317,10 @@ echo "----------------------------------------------------"
 "$ADB" shell settings get global wifi_switch_to_cell
 echo ""
 
-echo "[CHECK 2] Lyft background location -- look for: granted=true"
+echo "[CHECK 2] Lyft location permissions -- FINE and BACKGROUND should both show: granted=true"
 echo "----------------------------------------------------"
 if [ -n "$LYFT_PKG" ]; then
-    "$ADB" shell dumpsys package "$LYFT_PKG" | grep -i "BACKGROUND_LOCATION"
+    "$ADB" shell dumpsys package "$LYFT_PKG" | grep -i "LOCATION"
 else
     echo "[SKIPPED] Lyft Driver app was not found on this device -- Fix 2 was not applied."
 fi
