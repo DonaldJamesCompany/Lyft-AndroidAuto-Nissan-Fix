@@ -9,71 +9,75 @@ setlocal enabledelayedexpansion
 :: ------------------------------------------------------------
 :: STEP 0: AUTO-DOWNLOAD ANDROID PLATFORM TOOLS (IF NEEDED)
 :: ------------------------------------------------------------
-if not exist "%~dp0platform-tools-latest-windows\" (
-    echo.
-    echo ============================================================
-    echo   ANDROID PLATFORM TOOLS NOT FOUND -- DOWNLOADING NOW...
-    echo ============================================================
-    echo.
-    echo Downloading the official Android Platform Tools from Google.
-    echo (Approximately 11 MB -- an active internet connection is required.)
-    echo.
+if exist "%~dp0platform-tools-latest-windows\" goto :tools_ready
 
-    curl.exe -L --fail --progress-bar -o "%~dp0platform-tools-latest-windows.zip" "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
+echo.
+echo ============================================================
+echo   ANDROID PLATFORM TOOLS NOT FOUND -- DOWNLOADING NOW...
+echo ============================================================
+echo.
+echo Downloading the official Android Platform Tools from Google.
+echo (Approximately 11 MB -- an active internet connection is required.)
+echo.
 
-    if !errorlevel! neq 0 (
-        echo.
-        echo [ERROR] The download failed. Possible causes:
-        echo.
-        echo   - No active internet connection
-        echo   - A firewall, VPN, or proxy is blocking the download
-        echo   - Google's servers are temporarily unavailable
-        echo.
-        echo As a fallback, manually download the tools from:
-        echo   https://developer.android.com/tools/releases/platform-tools
-        echo Extract the ZIP, rename the extracted folder to:
-        echo   "platform-tools-latest-windows"
-        echo and place it in the same folder as this batch file.
-        echo Then re-run the script.
-        echo.
-        if exist "%~dp0platform-tools-latest-windows.zip" del /q "%~dp0platform-tools-latest-windows.zip"
-        echo Press any key to EXIT...
-        pause > nul
-        exit /b 1
-    )
+curl.exe -L --fail --progress-bar -o "%~dp0platform-tools-latest-windows.zip" "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
+if !errorlevel! neq 0 goto :download_failed
 
-    echo.
-    echo Download complete. Extracting files...
-    echo.
+echo.
+echo Download complete. Extracting files...
+echo.
 
-    tar -xf "%~dp0platform-tools-latest-windows.zip" -C "%~dp0."
+tar -xf "%~dp0platform-tools-latest-windows.zip" -C "%~dp0."
+if !errorlevel! neq 0 goto :extract_failed
 
-    if !errorlevel! neq 0 (
-        echo.
-        echo [ERROR] Extraction failed. The downloaded file may be incomplete or corrupt.
-        echo.
-        echo Deleting the partial download. Re-run the script to try again.
-        echo If the problem persists, check available disk space (at least 50 MB needed).
-        echo.
-        if exist "%~dp0platform-tools-latest-windows.zip" del /q "%~dp0platform-tools-latest-windows.zip"
-        echo Press any key to EXIT...
-        pause > nul
-        exit /b 1
-    )
+:: The ZIP extracts to a folder named "platform-tools" -- rename it to the expected name
+ren "%~dp0platform-tools" "platform-tools-latest-windows"
 
-    :: The ZIP extracts to a folder named "platform-tools" -- rename it to the expected name
-    ren "%~dp0platform-tools" "platform-tools-latest-windows"
+:: Delete the ZIP now that extraction is complete
+del /q "%~dp0platform-tools-latest-windows.zip"
 
-    :: Delete the ZIP now that extraction is complete
-    del /q "%~dp0platform-tools-latest-windows.zip"
+echo.
+echo ============================================================
+echo   PLATFORM TOOLS DOWNLOADED AND EXTRACTED SUCCESSFULLY.
+echo ============================================================
+echo.
+pause
+goto :tools_ready
 
-    echo.
-    echo ============================================================
-    echo   PLATFORM TOOLS DOWNLOADED AND EXTRACTED SUCCESSFULLY.
-    echo ============================================================
-    echo.
-    pause
-)
+:download_failed
+echo.
+echo [ERROR] The download failed. Possible causes:
+echo.
+echo   - No active internet connection
+echo   - A firewall, VPN, or proxy is blocking the download
+echo   - Google's servers are temporarily unavailable
+echo.
+echo As a fallback, manually download the tools from:
+echo   https://developer.android.com/tools/releases/platform-tools
+echo Extract the ZIP, rename the extracted folder to:
+echo   "platform-tools-latest-windows"
+echo and place it in the same folder as this batch file.
+echo Then re-run the script.
+echo.
+if exist "%~dp0platform-tools-latest-windows.zip" del /q "%~dp0platform-tools-latest-windows.zip"
+echo Press any key to EXIT...
+pause > nul
+exit /b 1
+
+:extract_failed
+echo.
+echo [ERROR] Extraction failed. The downloaded file may be incomplete or corrupt.
+echo.
+echo Deleting the partial download. Re-run the script to try again.
+echo If the problem persists, check available disk space (at least 50 MB needed).
+echo.
+if exist "%~dp0platform-tools-latest-windows.zip" del /q "%~dp0platform-tools-latest-windows.zip"
+if exist "%~dp0platform-tools\" rd /s /q "%~dp0platform-tools"
+echo Press any key to EXIT...
+pause > nul
+exit /b 1
+
+:tools_ready
 
 
 :: ------------------------------------------------------------
